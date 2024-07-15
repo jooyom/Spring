@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:object="${bsk}">
+    <p>이름 : <span th:text="${username}"></span></p>
+    <p>이메일 : <span th:text="${email}"></span></p>
+    <p>이 사람은 관리자 권한이 없습니다.</p>
+    <a th:if="${admin}" th:href="@{index}"> 관리자 메뉴</a>
+    <a th:unless="${admin}" th:href="@{index}"> 일반 사용자 메뉴</a>
+</div>
+</body>
+</html>
