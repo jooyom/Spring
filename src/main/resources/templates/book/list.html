@@ -2,6 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>책 목록</title>
+    <script language="javascript">
+        function showAlert(){
+            alert("메세지를 삭제 하시겠습니까?")
+        }
+    </script>
 </head>
 <body>
 <h1>책 목록</h1>
@@ -20,6 +25,8 @@
         <td th:text="${book.title}"></td>
         <td th:text="${book.author}"></td>
         <td th:text="${book.publicationYear}"></td>
+        <td> <button><a th:href="@{/books/{id}/edit(id=${book.id})}">수정</a></button></td>
+        <td> <button><a th:onclick="showAlert()" th:href="@{/books/{id}/delete(id=${book.id})}">삭제</a></button></td>
     </tr>
     </tbody>
 </table>

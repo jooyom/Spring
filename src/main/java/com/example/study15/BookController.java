@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class BookController {
 
 
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public String detail(@PathVariable("id") Long id, Model model){
 
         Book book = books.stream()
@@ -44,6 +43,35 @@ public class BookController {
 
         model.addAttribute("book", book);
         return "book/detail";
+    }*/
+
+    @GetMapping("/{id}/edit")
+    public String showEditBookForm(@PathVariable("id") Long id, Model model){
+        Book book = books.stream()
+                .filter(b->b.getId() ==id)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException());
+        model.addAttribute("book", book);
+        return "book/editBook";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String editBook(@PathVariable("id") Long id, @ModelAttribute Book updateBook){
+        Book book = books.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElseThrow(()->new IllegalArgumentException());
+        book.setTitle(updateBook.getTitle());
+        book.setAuthor(updateBook.getAuthor());
+        book.setPublicationYear(updateBook.getPublicationYear());
+        return "redirect:/books";
+
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteBook(@PathVariable("id") Long id){
+        books.removeIf(p->p.getId() == id);
+        return "redirect:/books";
     }
 
 }
